@@ -27,6 +27,7 @@ class SongContainer extends PureComponent {
 				setKey={currentKey}
 				song={song}
 				user={user}
+				youtube= {song?.youtube}
 			/>
 		)
 	}

@@ -110,7 +110,7 @@ const StyledFade = styled(Fade)(({ theme }) => ({
 	},
 }))
 
-const SongViewer = ({ currentSet, isPreview, setKey, song = {} }) => {
+const SongViewer = ({ currentSet, isPreview, setKey, song = {}, youtube }) => {
 	const dispatch = useDispatch()
 	const [chordSize] = useAtom(chordSizeAtom)
 	const [isNashville, setIsNashville] = useAtom(isNashvilleAtom)
@@ -120,6 +120,7 @@ const SongViewer = ({ currentSet, isPreview, setKey, song = {} }) => {
 
 	const setId = currentSet?.id
 	const songId = song?.id
+	const youtubeEmbed = youtube?.replace("watch?v=","embed/").split('&')[0];
 	const capoDiff = getKeyDiff(capoKey, setKey || song.key) //this is only for display purposes, telling the user where to put the capo
 	const capoKeyDescr = capoDiff ? `Capo ${capoDiff}` : 'Capo key'
 	const transposeAmount = getKeyDiff(song.key, capoKey) //this is how much to transpose by
@@ -312,7 +313,20 @@ const SongViewer = ({ currentSet, isPreview, setKey, song = {} }) => {
 						height: theme => theme.spacing(12),
 					}}
 				/>
+			{youtubeEmbed && (
+			<iframe 
+				width={"560"} 
+				height={"315"} 
+				src={youtubeEmbed} 
+				title={"YouTube video player"} 
+				frameborder={"0"} 
+				allow={"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"} 
+				margin-left= {"30px"}
+				allowfullscreen>
+			</iframe>
+			)}
 			</Box>
+		
 		</StyledFade>
 	)
 }

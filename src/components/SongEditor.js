@@ -104,6 +104,7 @@ class SongEditor extends Component {
 		isLoading: false,
 		key: '',
 		title: '',
+		youtube: '',
 		parserType: 'chords-above-words',
 	}
 
@@ -124,6 +125,10 @@ class SongEditor extends Component {
 
 	onAuthorInput = event => {
 		this.setState({ author: event.target.value })
+	}
+
+	onYoutubeInput = event => {
+		this.setState({ youtube: event.target.value })
 	}
 
 	onContentInput = event => {
@@ -158,7 +163,7 @@ class SongEditor extends Component {
 
 	onSaveSong = () => {
 		const { song } = this.props
-		const { author, parserType, title, key } = this.state
+		const { author, parserType, title, youtube, key } = this.state
 		const isNew = !song || isNil(song.id)
 		let content = this.state.content
 
@@ -171,6 +176,7 @@ class SongEditor extends Component {
 			content,
 			key,
 			title,
+			youtube,
 		}
 
 		if (isNew) {
@@ -194,13 +200,14 @@ class SongEditor extends Component {
 				content: song.content,
 				key: song.key,
 				title: song.title,
+				youtube: song.youtube
 			})
 		}
 	}
 
 	render() {
 		const { match } = this.props
-		const { author, content, key, title, parserType } = this.state
+		const { youtube, author, content, key, title, parserType } = this.state
 
 		const isNew = match.path === '/songs/new'
 
@@ -215,6 +222,7 @@ class SongEditor extends Component {
 			key,
 			lines: parser.parse(parsedContent),
 			title,
+			youtube,
 		}
 
 		return (
@@ -276,7 +284,19 @@ class SongEditor extends Component {
 												songKey={key}
 											/>
 										</Grid>
-
+										<Grid item xs={12} sm={6}>
+											<TextField
+												id={'youtube'}
+												label={
+													'Link de youtube'
+												}
+												className={classes.textField}
+												fullWidth
+												onChange={this.onYoutubeInput}
+												margin={'normal'}
+												value={youtube}
+											/>
+										</Grid>
 										<Grid item xs={12}>
 											<Grid
 												container
